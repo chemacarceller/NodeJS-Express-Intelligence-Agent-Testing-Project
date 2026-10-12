@@ -46,19 +46,23 @@ class IAgentController {
                 case 'NormalNoDB' :
                     if (!this.history[sessionId]) this.history[sessionId] = [];
                     this.history[sessionId].push({ role: 'user', content: message }); 
+                    break;
                 case 'SimpleDB' : 
                     // Se almacena los mensajes en base de datos aunque no se haga uso de ellos
                     this.history[sessionId] = [{ role: 'user', content: message }];
                     break;
                 case 'Medium' :
                     // Se almacena los mensajes en base de datos y se aplica un mecanismo de nivel medio para generar el historial
+                    break;
                 case 'Advanced' :
                     // Se almacena los mensajes en base de datos y se aplica un mecanismo de nivel avanzado para generar el historial
+                    break;
                 default: 
                 case 'NormalDB' :
                     // Here, the message needs to be saved to the database aunque no se hace uso de ello
                     if (!this.history[sessionId]) this.history[sessionId] = [];
                     this.history[sessionId].push({ role: 'user', content: message }); 
+                    break;
             }
         
             const { default: ollama } = await import('ollama');
