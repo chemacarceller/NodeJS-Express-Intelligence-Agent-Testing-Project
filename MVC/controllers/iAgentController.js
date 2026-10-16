@@ -64,8 +64,13 @@ class IAgentController {
                     this.history[sessionId].push({ role: 'user', content: message }); 
                     break;
             }
-        
-            const { default: ollama } = await import('ollama');
+
+            const host = process.env.HOST_OLLAMA || '127.0.0.1';
+            const port = process.env.PORT_OLLAMA || '11434';
+
+            const { Ollama } = await import('ollama');
+
+            const ollama = new Ollama({ host: `http://${host}:${port}` });
 
             const respuestaOllama = await ollama.chat({
                 model: this.model,
