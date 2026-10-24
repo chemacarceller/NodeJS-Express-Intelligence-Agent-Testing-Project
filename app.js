@@ -9,6 +9,6 @@ app.use(cors());
 app.use(express.json());
 
 const IAgentRoutes = require('./routes/IAgentRoutes');
-app.use('/api', IAgentRoutes); 
+app.use('/api', IAgentRoutes);
 
 module.exports = app;

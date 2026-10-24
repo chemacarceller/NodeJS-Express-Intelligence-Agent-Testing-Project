@@ -1,0 +1,7 @@
+services: 
+  iagent:
+    build:
+      context: ../..
+      dockerfile: docker/full-project/Dockerfile
+    ports:
+      - "4500:4500"
