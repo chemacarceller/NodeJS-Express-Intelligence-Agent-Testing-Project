@@ -11,5 +11,6 @@ router.post('/init-agent', iAgentController.initAgent);
 router.post('/send-message', iAgentController.sendMessage);
 router.post('/create-custom-model', iAgentController.createCustomModel);
 router.post('/fix-model-system', iAgentController.fixModelSystem);
+router.post('/expired-session-consult', iAgentController.expiredSessionConsult);
 
 module.exports = router;
