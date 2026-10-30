@@ -72,6 +72,7 @@ class IAgentController {
         this.createCustomModel = this.createCustomModel.bind(this);
         this.fixModelSystem = this.fixModelSystem.bind(this);
         this.expiredSessionConsult = this.expiredSessionConsult.bind(this);
+        this.closureNotify = this.closureNotify.bind(this);
     }
 
     // Code to execute when the timer expires
@@ -554,6 +555,38 @@ class IAgentController {
             });
         }
     }
+
+    // Method that carries out the closure of requested sessions
+    async closureNotify(req, res) {
+
+         try {
+
+            const { activeSessionIds } = req.body;
+
+            if (!activeSessionIds) throw new Error('The Array activeSessionIds is required')
+
+            // For each ID, we set its activity status to false and release the resources
+            activeSessionIds.forEach( (sessionId) => {
+                this.activity[sessionId] = false;
+                this.#executeAction(sessionId);
+            })
+
+            return res.sendStatus(204); 
+
+        } catch (error) {
+
+            // If a message is generated, we send the data along with a 500 error code, including the error and details.
+            // We also set success to false. Since it is a 500 error, response.ok will be false.
+            const realDetail = error.cause ? error.cause.message : error.message;
+
+            return res.status(500).json({
+                success: false,
+                error: 'Error in Intelligence Agent Module during closure notification process',
+                details: `${realDetail}`
+            });
+        }
+    }
+
 }
 
 module.exports = IAgentController;
