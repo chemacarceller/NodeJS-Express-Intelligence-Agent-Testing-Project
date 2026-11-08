@@ -152,8 +152,11 @@ class IAgentController {
             if (!mode) throw new Error("The mode parameter is required");
 
             // Secure UUID generation using the native Node.js module
-            const serverSessionId = crypto.randomUUID ? crypto.randomUUID() 
-                : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            const timestamp = Date.now().toString(36); 
+            const uuidSecure = crypto.randomUUID();
+            
+            const serverSessionId = crypto.randomUUID ? `${timestamp}-${uuidSecure}` 
+                : `${timestamp}`;
 
             const sessionId = serverSessionId;
 
